@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Diet Plan</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Find Your Personalized Diet Plan</h1>
+        <p>Enter your details below to get a customized diet plan:</p>
+
+        <form id="dietForm">
+            <label for="age">Age:</label>
+            <input type="number" id="age" required>
+
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height" required>
+
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" required>
+
+            <label for="activity">Activity Level:</label>
+            <select id="activity">
+                <option value="low">Low (Sedentary)</option>
+                <option value="moderate">Moderate (3-5 workouts/week)</option>
+                <option value="high">High (Daily intense exercise)</option>
+            </select>
+
+            <button type="submit">Get Diet Plan</button>
+        </form>
+
+        <div id="result" class="hidden">
+            <h2>Your Recommended Diet Plan</h2>
+            <p id="dietPlan"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
