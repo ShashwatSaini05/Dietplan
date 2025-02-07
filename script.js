@@ -1,36 +1,58 @@
 document.getElementById("dietForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    let age = document.getElementById("age").value;
-    let height = document.getElementById("height").value;
-    let weight = document.getElementById("weight").value;
+    let age = parseInt(document.getElementById("age").value);
+    let height = parseInt(document.getElementById("height").value);
+    let weight = parseInt(document.getElementById("weight").value);
     let activity = document.getElementById("activity").value;
 
-    let dietPlan = generateDietPlan(age, weight, activity);
+    let calories = calculateCalories(weight, activity);
+    let dietPlan = generateDietPlan(age, calories);
 
-    document.getElementById("dietPlan").innerText = dietPlan;
+    document.getElementById("dietPlan").innerHTML = dietPlan;
     document.getElementById("result").classList.remove("hidden");
 });
 
-function generateDietPlan(age, weight, activity) {
-    let calories;
-    
+function calculateCalories(weight, activity) {
+    let baseCalories;
+
     if (activity === "low") {
-        calories = weight * 22;
+        baseCalories = weight * 22;
     } else if (activity === "moderate") {
-        calories = weight * 25;
+        baseCalories = weight * 25;
     } else {
-        calories = weight * 28;
+        baseCalories = weight * 28;
+    }
+
+    return Math.round(baseCalories);
+}
+
+function generateDietPlan(age, calories) {
+    let breakfast, lunch, dinner, snacks;
+
+    if (age < 18) {
+        breakfast = "🥣 Whole grain cereal with milk and fruit";
+        lunch = "🍗 Chicken sandwich with veggies";
+        dinner = "🍲 Grilled fish with mashed potatoes";
+        snacks = "🍎 Fruit, yogurt, and a handful of nuts";
+    } else if (age < 40) {
+        breakfast = "🥑 Avocado toast with eggs";
+        lunch = "🥗 Grilled chicken with quinoa and salad";
+        dinner = "🍛 Salmon with brown rice and vegetables";
+        snacks = "🥜 Protein shake, nuts, or Greek yogurt";
+    } else {
+        breakfast = "🍵 Oatmeal with flaxseeds and banana";
+        lunch = "🥦 Steamed vegetables with grilled tofu";
+        dinner = "🥑 Avocado and quinoa bowl";
+        snacks = "🍊 Citrus fruits and mixed nuts";
     }
 
     return `
-        Based on your age (${age} years), weight (${weight}kg), and activity level (${activity}), you need approximately ${calories} calories per day.
-        
-        Recommended Diet:
-        - 🥗 Breakfast: Oatmeal with fruits and nuts
-        - 🍲 Lunch: Grilled chicken with quinoa and vegetables
-        - 🍛 Dinner: Salmon with brown rice and steamed greens
-        - 🍎 Snacks: Almonds, yogurt, and fresh fruit
-        - 💧 Stay Hydrated: Drink at least 2-3 liters of water daily
+        <strong>🍽️ Your Daily Calorie Requirement: ${calories} kcal</strong> <br><br>
+        <strong>🌞 Breakfast:</strong> ${breakfast} <br>
+        <strong>🍱 Lunch:</strong> ${lunch} <br>
+        <strong>🌙 Dinner:</strong> ${dinner} <br>
+        <strong>🍏 Snacks:</strong> ${snacks} <br><br>
+        💧 <strong>Stay Hydrated:</strong> Drink at least 2-3 liters of water daily! 
     `;
 }
